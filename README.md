@@ -1,50 +1,74 @@
-# Welcome to your Expo app 👋
+⚽ VemProFut
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+VemProFut is a mobile application designed to help users organize and manage their football (soccer) matches in a simple, efficient, and intuitive way.
 
-## Get started
+The goal of this project is to provide a complete experience for players who want to track games, manage teams, and record match events — all in one place.
 
-1. Install dependencies
+🚀 Project Purpose
 
-   ```bash
-   npm install
-   ```
+Organizing football matches with friends can quickly become messy:
 
-2. Start the app
+Who is playing?
+What’s the score?
+Who scored or assisted?
+How much time is left?
 
-   ```bash
-   npx expo start
-   ```
+VemProFut solves this by centralizing everything into a single mobile app, making match management seamless and more engaging.
 
-In the output, you'll find options to open the app in a
+✨ Features (in progress)
+⏱️ Match timer (inspired by real-world match flow)
+👥 Player management
+⚽ Goal tracking per player
+🅰️ Assist tracking
+🟨 Card system (fouls, warnings)
+📊 Match summary screen
+🔄 Real-time updates during the game
+🛠️ Tech Stack
+📱 Frontend (Mobile)
+React Native
+TypeScript
+Expo
+Expo Router
+State management (Context API / future scalability)
+🌐 Backend
+Node.js
+TypeScript
+Express.js
+REST API architecture
+🗄️ Database (planned)
+MySQL or PostgreSQL
+🧠 What I’m Learning
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+This project is focused on improving:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Scalable mobile architecture
+Clean code and maintainability
+Real-time data handling
+UI/UX focused on usability during live events
+Backend integration and API design
+📦 Installation
+# Clone the repository
+git clone https://github.com/zMadaah/VemProFut.git
 
-## Get a fresh project
+# Navigate into the project
+cd VemProFut
 
-When you're ready, run:
+# Install dependencies
+yarn install
 
-```bash
-npm run reset-project
-```
+# Start the project
+yarn start
+📈 Project Status
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+🚧 This project is currently under active development.
+New features and improvements are being added continuously.
 
-## Learn more
+🤝 Contributing
 
-To learn more about developing your project with Expo, look at the following resources:
+Contributions, ideas, and feedback are always welcome!
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Feel free to open an issue or submit a pull request.
 
-## Join the community
+🌍 Vision
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+The long-term goal of VemProFut is to evolve into a complete platform for amateur football management — helping players organize matches, track performance, and enhance their overall experience on and off the field.
