@@ -1,4 +1,4 @@
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import {
   StyleSheet,
@@ -13,18 +13,28 @@ export default function PartidaScreen() {
   const params = useLocalSearchParams<{
     teamA?: string;
     teamB?: string;
+    remaining?: string;
+    teamSize?: string 
   }>();
 
-  
-  const parsedTeamA = useMemo(() => {
-    if (!params.teamA) return [];
-    return JSON.parse(params.teamA as string);
-  }, [params.teamA]);
+  const router = useRouter();
 
-  const parsedTeamB = useMemo(() => {
-    if (!params.teamB) return [];
-    return JSON.parse(params.teamB as string);
-  }, [params.teamB]);
+  const parsedTeamA = useMemo(() => {
+  if (!params.teamA) return [];
+  return JSON.parse(params.teamA);
+}, [params.teamA]);
+
+const parsedTeamB = useMemo(() => {
+  if (!params.teamB) return [];
+  return JSON.parse(params.teamB);
+}, [params.teamB]);
+
+const remainingPlayers = useMemo(() => {
+  if (!params.remaining) return [];
+  return JSON.parse(params.remaining);
+}, [params.remaining]);
+
+const teamSize = Number(params.teamSize || 0);
 
   
   const [teamAPlayers, setTeamAPlayers] = useState<PlayerStats[]>([]);
@@ -37,31 +47,28 @@ export default function PartidaScreen() {
   const [scoreA, setScoreA] = useState(0);
   const [scoreB, setScoreB] = useState(0);
 
+  
  
   useEffect(() => {
-    const allPlayers = [...parsedTeamA, ...parsedTeamB];
 
-    const teamA: PlayerStats[] = [];
-    const teamB: PlayerStats[] = [];
+  const teamA: PlayerStats[] = parsedTeamA.map((p: any) => ({
+    ...p,
+    goals: 0,
+    assists: 0,
+    fouls: 0,
+  }));
 
-    allPlayers.forEach((player: any, index: number) => {
-      const playerWithStats = {
-        ...player,
-        goals: 0,
-        assists: 0,
-        fouls: 0,
-      };
+  const teamB: PlayerStats[] = parsedTeamB.map((p: any) => ({
+    ...p,
+    goals: 0,
+    assists: 0,
+    fouls: 0,
+  }));
 
-      if (index % 2 === 0) {
-        teamA.push(playerWithStats);
-      } else {
-        teamB.push(playerWithStats);
-      }
-    });
+  setTeamAPlayers(teamA);
+  setTeamBPlayers(teamB);
 
-    setTeamAPlayers(teamA);
-    setTeamBPlayers(teamB);
-  }, [parsedTeamA, parsedTeamB]);
+}, [parsedTeamA, parsedTeamB]);
 
   
   useEffect(() => {
@@ -99,6 +106,8 @@ export default function PartidaScreen() {
         teamB: JSON.stringify(teamBPlayers),
         scoreA,
         scoreB,
+        remaining: JSON.stringify(remainingPlayers),
+        teamSize
       },
     });
   };
@@ -432,5 +441,6 @@ finishText: {
 
   icon: {
     fontSize: 16,
+     color: "#fff",
   },
 });

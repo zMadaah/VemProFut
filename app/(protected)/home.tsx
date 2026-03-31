@@ -16,7 +16,7 @@ const CARD_SIZE = (width - 48 - SPACING) / 2;
 
 const data = [
   { id: "1", title: "Criar Grupo", icon: "people-outline", route: "/criar-grupo" },
-  { id: "2", title: "Fluxo de Caixa", icon: "cash-outline", route: "" },
+  { id: "2", title: "Fluxo de Caixa", icon: "cash-outline", route: "/fluxo-caixa" },
   { id: "3", title: "Estatiticas", icon: "wallet-outline", route: "" },
   { id: "4", title: "Histórico", icon: "time-outline", route: "" },
 ];

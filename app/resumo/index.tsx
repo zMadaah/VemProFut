@@ -1,28 +1,100 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useMemo } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ResumoScreen() {
-  // 🔥 MOCK DATA (visualização)
-  const scoreA = 5;
-  const scoreB = 3;
 
-  const teamA = [
-    { id: "1", name: "João", goals: 2, assists: 1, fouls: 0 },
-    { id: "2", name: "Carlos", goals: 1, assists: 2, fouls: 1 },
-    { id: "3", name: "Mateus", goals: 2, assists: 0, fouls: 0 },
-  ];
+  const router = useRouter();
 
-  const teamB = [
-    { id: "4", name: "Lucas", goals: 2, assists: 0, fouls: 1 },
-    { id: "5", name: "Pedro", goals: 1, assists: 1, fouls: 2 },
-    { id: "6", name: "Rafael", goals: 0, assists: 1, fouls: 0 },
-  ];
+  const params = useLocalSearchParams<{
+    teamA?: string;
+    teamB?: string;
+    scoreA?: string;
+    scoreB?: string;
+    remaining?: string;
+    teamSize?: string;
+  }>();
 
-  // 🧠 MVP (mais gols)
+  const teamA = useMemo(() => JSON.parse(params.teamA || "[]"), [params.teamA]);
+  const teamB = useMemo(() => JSON.parse(params.teamB || "[]"), [params.teamB]);
+  const remainingPlayers = useMemo(
+    () => JSON.parse(params.remaining || "[]"),
+    [params.remaining]
+  ); 
+
+  const teamSize = Number(params.teamSize || 0);
+
+  const scoreA = Number(params.scoreA);
+  const scoreB = Number(params.scoreB);
+
+  /* ---------------- RESULTADO ---------------- */
+
+  const winner =
+    scoreA > scoreB ? "A" :
+    scoreB > scoreA ? "B" :
+    "draw";
+
+  /* ---------------- MVP ---------------- */
+
   const allPlayers = [...teamA, ...teamB];
-  const mvp = allPlayers.reduce((best, current) =>
+
+  const mvp = allPlayers.reduce((best: any, current: any) =>
     current.goals > best.goals ? current : best
   );
+
+  /* ---------------- PROXIMA PARTIDA ---------------- */
+
+  const handleNextMatch = () => {
+
+  let nextTeamA: any[] = [];
+  let nextTeamB: any[] = [];
+
+  let newQueue = [...remainingPlayers];
+
+  if (winner === "A") {
+
+    nextTeamA = teamA;
+
+    nextTeamB = newQueue.slice(0, teamSize);
+
+    newQueue = newQueue.slice(teamSize);
+
+  } 
+  else if (winner === "B") {
+
+    nextTeamA = teamB;
+
+    nextTeamB = newQueue.slice(0, teamSize);
+
+    newQueue = newQueue.slice(teamSize);
+
+  } 
+  else {
+
+    nextTeamA = newQueue.slice(0, teamSize);
+    nextTeamB = newQueue.slice(teamSize, teamSize * 2);
+
+    newQueue = newQueue.slice(teamSize * 2);
+
+  }
+
+  router.push({
+    pathname: "/partida",
+    params: {
+      teamA: JSON.stringify(nextTeamA),
+      teamB: JSON.stringify(nextTeamB),
+      remaining: JSON.stringify(newQueue),
+      teamSize: String(teamSize),
+    },
+  });
+};
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,9 +108,9 @@ export default function ResumoScreen() {
       {/* MVP */}
       <View style={styles.mvpBox}>
         <Text style={styles.mvpTitle}>🏆 MVP da Partida</Text>
-        <Text style={styles.mvpName}>{mvp.name}</Text>
+        <Text style={styles.mvpName}>{mvp?.name}</Text>
         <Text style={styles.mvpStats}>
-          ⚽ {mvp.goals} | 👟 {mvp.assists}
+          ⚽ {mvp?.goals} | 👟 {mvp?.assists}
         </Text>
       </View>
 
@@ -46,6 +118,20 @@ export default function ResumoScreen() {
         <TeamResumo title="Time A" players={teamA} />
         <TeamResumo title="Time B" players={teamB} />
       </ScrollView>
+
+      {/* BOTÃO PRÓXIMA PARTIDA */}
+
+      {remainingPlayers.length >= teamSize && (
+        <TouchableOpacity
+          style={styles.nextButton}
+          onPress={handleNextMatch}
+        >
+          <Text style={styles.nextText}>
+            Próxima Partida
+          </Text>
+        </TouchableOpacity>
+      )}
+
     </SafeAreaView>
   );
 }
@@ -75,6 +161,7 @@ function TeamResumo({ title, players }: any) {
 /* STYLES */
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     backgroundColor: "#0F0F0F",
@@ -106,7 +193,6 @@ const styles = StyleSheet.create({
   mvpTitle: {
     color: "#fc5200",
     fontWeight: "bold",
-    marginBottom: 6,
   },
 
   mvpName: {
@@ -154,4 +240,19 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 12,
   },
+
+  nextButton: {
+    backgroundColor: "#fc5200",
+    padding: 16,
+    borderRadius: 12,
+    alignItems: "center",
+    marginTop: 10,
+  },
+
+  nextText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  }
+
 });
