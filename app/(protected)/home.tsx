@@ -19,7 +19,8 @@ const data = [
   { id: "2", title: "Fluxo de Caixa", icon: "cash-outline", route: "/fluxo-caixa" },
   { id: "3", title: "Estatiticas", icon: "analytics-outline", route: "" },
   { id: "4", title: "Histórico", icon: "time-outline", route: "" },
-  { id: "5", title: "Localização", icon: "location-outline", route: "" },
+  { id: "5", title: "Localização", icon: "location-outline", route: "/localizacao" },
+  { id: "5", title: "Perfil", icon: "settings", route: "/profile" },
 ];
 
 export default function HomeScreen() {

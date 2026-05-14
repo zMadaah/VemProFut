@@ -31,98 +31,155 @@ export default function RegisterScreen() {
       return;
     }
 
-    // Aqui depois vamos conectar com API
     router.replace("/login");
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
       >
-        <ScrollView contentContainerStyle={styles.container}>
-          <Text style={styles.title}>Criar Conta</Text>
+        <ScrollView
+          contentContainerStyle={styles.container}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* HEADER */}
 
-          
-          <TextInput
-            placeholder="Nome completo"
-            style={styles.input}
-            value={name}
-            onChangeText={setName}
-          />
-
-          
-          <TextInput
-            placeholder="Email"
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-
-          
-          <TextInput
-            placeholder="Celular"
-            style={styles.input}
-            value={phone}
-            onChangeText={setPhone}
-            keyboardType="phone-pad"
-          />
-
-          
-          <View style={styles.passwordContainer}>
-            <TextInput
-              placeholder="Senha"
-              style={styles.passwordInput}
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={!showPassword}
-            />
-            <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
-            >
+          <View style={styles.header}>
+            <View style={styles.logoContainer}>
               <Ionicons
-                name={showPassword ? "eye-off" : "eye"}
-                size={22}
-                color="#666"
+                name="football"
+                size={42}
+                color="#fc5200"
               />
-            </TouchableOpacity>
-          </View>
+            </View>
 
-          
-          <View style={styles.passwordContainer}>
-            <TextInput
-              placeholder="Confirmar senha"
-              style={styles.passwordInput}
-              value={confirm}
-              onChangeText={setConfirm}
-              secureTextEntry={!showConfirm}
-            />
-            <TouchableOpacity
-              onPress={() => setShowConfirm(!showConfirm)}
-            >
-              <Ionicons
-                name={showConfirm ? "eye-off" : "eye"}
-                size={22}
-                color="#666"
-              />
-            </TouchableOpacity>
-          </View>
-
-          
-          <TouchableOpacity style={styles.button} onPress={handleRegister}>
-            <Text style={styles.buttonText}>Cadastrar</Text>
-          </TouchableOpacity>
-
-          
-          <TouchableOpacity onPress={() => router.back()}>
-            <Text style={styles.loginText}>
-              Já possui conta? <Text style={styles.loginBold}>Entrar</Text>
+            <Text style={styles.title}>
+              Criar Conta
             </Text>
-          </TouchableOpacity>
+
+            <Text style={styles.subtitle}>
+              Organize suas peladas e encontre
+              partidas próximas
+            </Text>
+          </View>
+
+          {/* FORM */}
+
+          <View style={styles.form}>
+
+            <TextInput
+              placeholder="Nome completo"
+              placeholderTextColor="#777"
+              style={styles.input}
+              value={name}
+              onChangeText={setName}
+            />
+
+            <TextInput
+              placeholder="Email"
+              placeholderTextColor="#777"
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+
+            <TextInput
+              placeholder="Celular"
+              placeholderTextColor="#777"
+              style={styles.input}
+              value={phone}
+              onChangeText={setPhone}
+              keyboardType="phone-pad"
+            />
+
+            {/* SENHA */}
+
+            <View style={styles.passwordContainer}>
+              <TextInput
+                placeholder="Senha"
+                placeholderTextColor="#777"
+                style={styles.passwordInput}
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword}
+              />
+
+              <TouchableOpacity
+                onPress={() =>
+                  setShowPassword(!showPassword)
+                }
+              >
+                <Ionicons
+                  name={
+                    showPassword
+                      ? "eye-off"
+                      : "eye"
+                  }
+                  size={22}
+                  color="#fc5200"
+                />
+              </TouchableOpacity>
+            </View>
+
+            {/* CONFIRMAR SENHA */}
+
+            <View style={styles.passwordContainer}>
+              <TextInput
+                placeholder="Confirmar senha"
+                placeholderTextColor="#777"
+                style={styles.passwordInput}
+                value={confirm}
+                onChangeText={setConfirm}
+                secureTextEntry={!showConfirm}
+              />
+
+              <TouchableOpacity
+                onPress={() =>
+                  setShowConfirm(!showConfirm)
+                }
+              >
+                <Ionicons
+                  name={
+                    showConfirm
+                      ? "eye-off"
+                      : "eye"
+                  }
+                  size={22}
+                  color="#fc5200"
+                />
+              </TouchableOpacity>
+            </View>
+
+            {/* BOTÃO */}
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleRegister}
+            >
+              <Text style={styles.buttonText}>
+                Cadastrar
+              </Text>
+            </TouchableOpacity>
+
+            {/* LOGIN */}
+
+            <TouchableOpacity
+              onPress={() => router.back()}
+            >
+              <Text style={styles.loginText}>
+                Já possui conta?{" "}
+                <Text style={styles.loginBold}>
+                  Entrar
+                </Text>
+              </Text>
+            </TouchableOpacity>
+
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -130,61 +187,108 @@ export default function RegisterScreen() {
 }
 
 const styles = StyleSheet.create({
+
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#0F0F0F",
+  },
+
   container: {
     flexGrow: 1,
     padding: 24,
     justifyContent: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#0F0F0F",
   },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 32,
-    textAlign: "center",
-  },
-  input: {
-    height: 50,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    marginBottom: 16,
-    fontSize: 16,
-  },
-  passwordContainer: {
-    flexDirection: "row",
+
+  header: {
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    marginBottom: 16,
-    height: 50,
+    marginBottom: 36,
   },
-  passwordInput: {
-    flex: 1,
-    fontSize: 16,
-  },
-  button: {
-    backgroundColor: "#f8d613",
-    height: 50,
-    borderRadius: 12,
+
+  logoContainer: {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    backgroundColor: "#1A1A1A",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
   },
+
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#fff",
+    marginBottom: 8,
+  },
+
+  subtitle: {
+    color: "#777",
+    textAlign: "center",
+    fontSize: 14,
+    lineHeight: 22,
+  },
+
+  form: {
+    marginTop: 10,
+  },
+
+  input: {
+    height: 56,
+    backgroundColor: "#1A1A1A",
+    borderRadius: 16,
+    paddingHorizontal: 18,
+    marginBottom: 16,
+    fontSize: 16,
+    color: "#fff",
+    borderWidth: 1,
+    borderColor: "#2A2A2A",
+  },
+
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#1A1A1A",
+    borderRadius: 16,
+    paddingHorizontal: 18,
+    marginBottom: 16,
+    height: 56,
+    borderWidth: 1,
+    borderColor: "#2A2A2A",
+  },
+
+  passwordInput: {
+    flex: 1,
+    fontSize: 16,
+    color: "#fff",
+  },
+
+  button: {
+    backgroundColor: "#fc5200",
+    height: 56,
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 8,
+    marginBottom: 24,
+    elevation: 4,
+  },
+
   buttonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
   },
+
   loginText: {
     textAlign: "center",
     fontSize: 14,
-    color: "#111835",
+    color: "#777",
   },
+
   loginBold: {
-    color: "#0248c1",
+    color: "#fc5200",
     fontWeight: "bold",
   },
+
 });
