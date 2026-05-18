@@ -1,74 +1,259 @@
-⚽ VemProFut
+# ⚽ VemProFut
 
-VemProFut is a mobile application designed to help users organize and manage their football (soccer) matches in a simple, efficient, and intuitive way.
+**VemProFut** is a football match management platform designed to help players organize and manage their football (soccer) matches in a simple, efficient, and intuitive way.
 
-The goal of this project is to provide a complete experience for players who want to track games, manage teams, and record match events — all in one place.
+The goal of this project is to provide a complete experience for players who want to organize games, manage teams, track match events, and create a better experience on and off the field.
 
-🚀 Project Purpose
+---
+
+## 🚀 Project Purpose
 
 Organizing football matches with friends can quickly become messy:
 
-Who is playing?
-What’s the score?
-Who scored or assisted?
-How much time is left?
+- Who is playing?
+- What’s the score?
+- Who scored or assisted?
+- How much time is left?
+- How do we keep match information organized?
 
-VemProFut solves this by centralizing everything into a single mobile app, making match management seamless and more engaging.
+**VemProFut** solves this by centralizing everything into a single platform, making match management easier, faster, and more engaging.
 
-✨ Features (in progress)
-⏱️ Match timer (inspired by real-world match flow)
-👥 Player management
-⚽ Goal tracking per player
-🅰️ Assist tracking
-🟨 Card system (fouls, warnings)
-📊 Match summary screen
-🔄 Real-time updates during the game
-🛠️ Tech Stack
-📱 Frontend (Mobile)
-React Native
-TypeScript
-Expo
-Expo Router
-State management (Context API / future scalability)
-🌐 Backend
-Node.js
-TypeScript
-Express.js
-REST API architecture
-🗄️ Database (planned)
-MySQL or PostgreSQL
-🧠 What I’m Learning
+---
 
-This project is focused on improving:
+## ✨ Features (In Progress)
 
-Scalable mobile architecture
-Clean code and maintainability
-Real-time data handling
-UI/UX focused on usability during live events
-Backend integration and API design
-📦 Installation
-# Clone the repository
+- ⏱️ Match timer inspired by real football match flow
+- 👥 Player management
+- ⚽ Goal tracking per player
+- 🅰️ Assist tracking
+- 🟨 Card system (warnings and fouls)
+- 📊 Match summary dashboard
+- 🔄 Real-time game updates
+- 🔐 JWT authentication
+- 👤 User registration and login
+- 📱 Personalized player profiles
+
+---
+
+## 🛠️ Tech Stack
+
+### 📱 Frontend (Mobile)
+
+- React Native
+- TypeScript
+- Expo
+- Expo Router
+- Context API
+- Axios
+- AsyncStorage
+
+---
+
+### 🌐 Backend API
+
+Built following a scalable production-oriented architecture:
+
+- Node.js
+- TypeScript
+- Express.js
+- Prisma ORM
+- JWT Authentication
+- Bcrypt
+- REST API
+
+---
+
+### 🗄️ Database
+
+- PostgreSQL
+
+---
+
+## 📂 Project Structure
+
+```bash
+VemProFut/
+│
+├── mobile/
+│   ├── src/
+│   ├── app/
+│   ├── components/
+│   ├── services/
+│   └── contexts/
+│
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── routes/
+│   │   ├── middlewares/
+│   │   ├── services/
+│   │   └── utils/
+│   │
+│   ├── prisma/
+│   └── server.ts
+│
+└── README.md
+```
+
+---
+
+## 🧠 What I'm Learning
+
+This project is helping me improve:
+
+- Scalable software architecture
+- Mobile application development
+- Authentication flows with JWT
+- API development with Node.js
+- Database modeling
+- Clean code principles
+- Real-world project structure
+- Full-stack integration
+
+---
+
+## 📦 Installation & Setup
+
+Clone the repository:
+
+```bash
 git clone https://github.com/zMadaah/VemProFut.git
+```
 
-# Navigate into the project
+Navigate to project:
+
+```bash
 cd VemProFut
+```
 
-# Install dependencies
+---
+
+## 📱 Frontend Setup
+
+Navigate to mobile folder:
+
+```bash
+cd mobile
+```
+
+Install dependencies:
+
+```bash
 yarn install
+```
 
-# Start the project
-yarn start
-📈 Project Status
+Start Expo:
+
+```bash
+npx expo start
+```
+
+Run Android:
+
+```bash
+npx expo run:android
+```
+
+Run iOS:
+
+```bash
+npx expo run:ios
+```
+
+---
+
+## 🌐 Backend Setup
+
+Navigate to backend:
+
+```bash
+cd backend
+```
+
+Install dependencies:
+
+```bash
+yarn install
+```
+
+Create a `.env` file:
+
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/vemprofut"
+
+JWT_SECRET=your_secret_key
+```
+
+Run Prisma migrations:
+
+```bash
+npx prisma migrate dev
+```
+
+Generate Prisma client:
+
+```bash
+npx prisma generate
+```
+
+Start development server:
+
+```bash
+yarn dev
+```
+
+API runs on:
+
+```bash
+http://localhost:3333
+```
+
+---
+
+## 🔐 Authentication Flow
+
+Current authentication flow:
+
+1. User creates account
+2. Password is encrypted with Bcrypt
+3. Data is stored in PostgreSQL
+4. JWT token is generated after login
+5. Mobile application stores session
+6. Authenticated routes become available
+
+---
+
+## 📈 Project Status
 
 🚧 This project is currently under active development.
-New features and improvements are being added continuously.
 
-🤝 Contributing
+Recent progress:
 
-Contributions, ideas, and feedback are always welcome!
+✅ Backend API started  
+✅ PostgreSQL integration  
+✅ User registration flow  
+✅ Login authentication with JWT  
+✅ Prisma ORM setup  
+🚀 Mobile + API integration in progress
+
+---
+
+## 🤝 Contributing
+
+Contributions, ideas, and feedback are welcome.
 
 Feel free to open an issue or submit a pull request.
 
-🌍 Vision
+---
 
-The long-term goal of VemProFut is to evolve into a complete platform for amateur football management — helping players organize matches, track performance, and enhance their overall experience on and off the field.
+## 🌍 Vision
+
+The long-term goal of **VemProFut** is to evolve into a complete platform for amateur football management — helping players organize matches, track performance, build teams, and improve the football experience.
+
+---
+
+LinkedIn:
+LinkedIn profile: www.linkedin.com/in/joao-guilherme-cruz
+---
+
+Built with passion for football and technology ⚽💻
