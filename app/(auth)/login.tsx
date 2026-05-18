@@ -24,7 +24,25 @@ export default function LoginScreen() {
 
   async function handleLogin() {
     await login(email, password);
-    router.replace("/home");
+    const { signIn } = useContext(AuthContext);
+
+    async function handleLogin() {
+
+      try {
+
+        await signIn(
+          email,
+          password
+        );
+
+        router.replace("/(protected)");
+
+      } catch {
+
+        alert("Login inválido");
+      }
+
+    }
   }
 
   return (
@@ -48,7 +66,7 @@ export default function LoginScreen() {
             />
           </View>
 
-          
+
           <View style={styles.form}>
             <Text style={styles.title}>Entrar</Text>
 
@@ -164,3 +182,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+function useContext(AuthContext: any): { signIn: any; } {
+  throw new Error("Function not implemented.");
+}

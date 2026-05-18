@@ -13,6 +13,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { api } from "@/services/api";
+
 export default function RegisterScreen() {
   const router = useRouter();
 
@@ -25,15 +27,34 @@ export default function RegisterScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
-  function handleRegister() {
-    if (password !== confirm) {
-      alert("As senhas não coincidem");
-      return;
+  async function handleRegister() {
+  try {
+
+    if(password !== confirm){
+      return alert("As senhas não coincidem");
     }
 
-    router.replace("/login");
-  }
+    await api.post("/users/register",{
+      name,
+      email,
+      phone,
+      password
+    });
 
+    alert("Conta criada com sucesso");
+
+    router.replace("/login");
+
+  } catch(error:any){
+
+    console.log(error.response?.data);
+
+    alert(
+      error.response?.data?.error ||
+      "Erro ao cadastrar"
+    );
+  }
+}
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView

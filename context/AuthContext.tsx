@@ -1,46 +1,108 @@
-import * as SecureStore from "expo-secure-store";
-import React, { createContext, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createContext, useEffect, useState } from "react";
+import { api } from "../services/api";
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
+type AuthContextData = {
 
-interface AuthContextData {
-  user: User | null;
-  login: (email: string, password: string) => Promise<void>;
+  user: any;
+  signed: boolean;
+
+  signIn: (
+    email: string,
+    password: string
+  ) => Promise<void>;
+
   logout: () => Promise<void>;
 }
 
-export const AuthContext = createContext<AuthContextData>(
-  {} as AuthContextData
-);
+export const AuthContext =
+  createContext({} as AuthContextData);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+export function AuthProvider({
+  children
+}: any) {
 
-  async function login(email: string, password: string) {
-    // Aqui depois vamos conectar com a API
-    const fakeUser = {
-      id: "1",
-      name: "Joao",
-      email,
-    };
+  const [user, setUser] = useState(null);
 
-    await SecureStore.setItemAsync("token", "fake-token");
+  async function signIn(
+    email: string,
+    password: string
+  ) {
 
-    setUser(fakeUser);
+    const response =
+      await api.post(
+        "/users/login",
+        {
+          email,
+          password
+        }
+      );
+
+    const { token, user } =
+      response.data;
+
+    await AsyncStorage.setItem(
+      "@token",
+      token
+    );
+
+    await AsyncStorage.setItem(
+      "@user",
+      JSON.stringify(user)
+    );
+
+    api.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${token}`;
+
+    setUser(user);
   }
 
   async function logout() {
-    await SecureStore.deleteItemAsync("token");
+
+    await AsyncStorage.clear();
+
     setUser(null);
   }
 
+  async function loadStorage() {
+
+    const token =
+      await AsyncStorage.getItem("@token");
+
+    const user =
+      await AsyncStorage.getItem("@user");
+
+    if (token && user) {
+
+      api.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${token}`;
+
+      setUser(
+        JSON.parse(user)
+      );
+    }
+  }
+
+  useEffect(() => {
+    loadStorage();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+
+    <AuthContext.Provider
+      value={{
+        user,
+        signed: !!user,
+        signIn,
+        logout
+      }}
+    >
+
       {children}
+
     </AuthContext.Provider>
+
   );
 }
